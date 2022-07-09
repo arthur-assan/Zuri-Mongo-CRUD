@@ -28,14 +28,24 @@ exports.deleteTodo = (req, res) => {
           })
           .catch((err) => console.log(err));
 }
-
+exports.getUpdateTodo = (req,res) => {
+          const { _id } = req.params;
+          Todo.findById({ _id },(err, data)=>{
+            if (err) {
+              console.log(err);
+            }else{
+              res.render("update", {todo: data});
+            }
+          })}
 exports.updateTodo = (req,res) => {
-    const { _id } = req.params;
-    Todo.updateOne({ _id },{title:title, description:description})
-    .then(() => {
-        console.log("Updated Todo Successfully!");
-        res.redirect("/");
-      })
-      .catch((err) => console.log(err));
+          const { _id } = req.params;
+          const {title, description} = req.body;
+          
+          Todo.updateOne({ _id },{title:title, description:description})
+          .then(() => {
+              console.log("Updated Todo Successfully!");
+              res.redirect("/");
+            })
+            .catch((err) => console.log(err));
 
 }
